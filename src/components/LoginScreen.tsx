@@ -28,73 +28,73 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-indigo-50/60 via-slate-50 to-blue-50/60">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-indigo-50/40 via-slate-50/50 to-blue-50/40">
       {/* Container Principal */}
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-sm">
         {/* Card do Formulário */}
-        <div className="glass border border-slate-200 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+        <div className="glass border border-white/80 rounded-3xl p-7 shadow-xl relative overflow-hidden">
           {/* Luz Decorativa */}
-          <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/3 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/3 rounded-full blur-3xl pointer-events-none"></div>
 
           {/* Logo / Título integrado dentro do Card */}
-          <div className="flex flex-col items-center mb-6">
+          <div className="flex flex-col items-center mb-5">
             <img 
               src="/ctdi-logo-50.png" 
               alt="Logo CTDI 50 Anos" 
-              className="h-28 w-auto object-contain mb-3 drop-shadow-sm"
+              className="h-20 w-auto object-contain mb-2 drop-shadow-sm opacity-90"
             />
-            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-800 to-slate-900 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold tracking-wide text-slate-800">
               Mídias
             </h1>
           </div>
 
           {error && (
-            <div className="mb-5 p-3 rounded-lg bg-red-50 border border-red-200 text-red-650 text-xs flex items-center gap-2">
-              <AlertCircle size={14} className="shrink-0" />
+            <div className="mb-4 p-2.5 rounded-lg bg-red-50/80 border border-red-100 text-red-600 text-xs flex items-center gap-2">
+              <AlertCircle size={13} className="shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             {/* Input E-mail */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-650 block">
+            <div className="space-y-1">
+              <label className="text-[11px] font-semibold text-slate-500 block">
                 E-mail Corporativo
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-                  <Mail size={16} />
+                  <Mail size={15} />
                 </span>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Digite seu e-mail corporativo"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-850 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 text-sm transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400/20 text-xs transition-all"
                 />
               </div>
             </div>
 
             {/* Input Senha */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-650 block">
+            <div className="space-y-1">
+              <label className="text-[11px] font-semibold text-slate-500 block">
                 Senha de Acesso
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-                  <Lock size={16} />
+                  <Lock size={15} />
                 </span>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Digite sua senha"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-850 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 text-sm transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400/20 text-xs transition-all"
                 />
               </div>
               <div className="flex justify-end pt-0.5">
-                <button type="button" className="text-[10px] text-slate-400 hover:text-indigo-600 transition-colors font-medium">
+                <button type="button" className="text-[10px] text-slate-400 hover:text-indigo-650 transition-colors font-medium">
                   Esqueceu a senha?
                 </button>
               </div>
@@ -103,7 +103,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             {/* Botão Acessar */}
             <button
               type="submit"
-              className="w-full py-3 px-4 mt-6 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-indigo-650/10 focus:outline-none"
+              className="w-full py-2.5 px-4 mt-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-indigo-600/10 focus:outline-none"
             >
               Entrar no Sistema
             </button>
