@@ -51,7 +51,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             <h1 className="text-2xl font-bold tracking-wide text-white mt-2">
               Mídias
             </h1>
-            <span className="text-[9px] text-slate-300 font-semibold tracking-widest uppercase mt-0.5">
+            <span className="text-[9px] text-white font-semibold tracking-widest uppercase mt-0.5">
               Portal Corporativo - CTDI
             </span>
           </div>

@@ -287,8 +287,8 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                 }}
                 className={`text-[10px] font-semibold px-3 py-1.5 rounded-lg border transition-all shrink-0 ${
                   selectedDept === dept
-                    ? 'bg-[#0b1736] text-white border-[#0b1736] shadow-md shadow-[#0b1736]/10'
-                    : 'bg-white border-slate-200 text-slate-650 hover:text-[#0b1736] hover:bg-blue-50/50 hover:border-blue-200'
+                    ? 'bg-[#002c5f] text-white border-[#002c5f] shadow-md shadow-[#002c5f]/10'
+                    : 'bg-white border-slate-200 text-slate-650 hover:text-[#002c5f] hover:bg-blue-50/50 hover:border-blue-200'
                 }`}
               >
                 {dept}
@@ -309,7 +309,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
               setCurrentIndex(0);
             }}
             placeholder="Buscar mídia..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all shadow-sm"
+            className="w-full pl-9 pr-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#002c5f] focus:ring-1 focus:ring-[#002c5f]/20 text-xs transition-all shadow-sm"
           />
         </div>
       </div>
@@ -355,13 +355,13 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                 {activeMedia.id === 'virtual-weather' ? (
                   <div className="w-full h-full flex flex-col justify-between p-6 md:p-8 bg-white text-left select-none relative overflow-hidden">
                     {/* Background glow effects */}
-                    <div className="absolute top-0 right-0 w-80 h-80 bg-[#0b1736]/5 rounded-full blur-3xl pointer-events-none"></div>
+                    <div className="absolute top-0 right-0 w-80 h-80 bg-[#002c5f]/5 rounded-full blur-3xl pointer-events-none"></div>
                     <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
                     {/* Top Header */}
                     <div className="flex justify-between items-center border-b border-slate-100 pb-4 z-10">
                       <div>
-                        <span className="text-[9px] font-bold text-[#0b1736] uppercase tracking-widest block mb-0.5">Painel Climático Informativo</span>
+                        <span className="text-[9px] font-bold text-[#002c5f] uppercase tracking-widest block mb-0.5">Painel Climático Informativo</span>
                         <h2 className="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">
                           Campinas, SP <span className="text-xs font-normal text-slate-400">• CTDI Brasil</span>
                         </h2>
@@ -369,7 +369,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                       
                       <div className="flex gap-3 text-[10px] text-slate-500">
                         <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-xl shadow-sm">
-                          <Wind size={12} className="text-[#0b1736]" />
+                          <Wind size={12} className="text-[#002c5f]" />
                           <span>Vento: 12 km/h</span>
                         </div>
                         <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-xl shadow-sm">
@@ -382,7 +382,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                     {/* Middle grid */}
                     <div className="grid grid-cols-3 gap-5 items-center my-auto z-10">
                       {/* Left: Big Today Temp */}
-                      <div className="col-span-1 bg-gradient-to-br from-blue-50 to-[#0b1736]/5 border border-blue-150 rounded-2xl p-5 flex flex-col items-center text-center space-y-3 shadow-sm">
+                      <div className="col-span-1 bg-gradient-to-br from-blue-50 to-[#002c5f]/5 border border-blue-150 rounded-2xl p-5 flex flex-col items-center text-center space-y-3 shadow-sm">
                         <CloudSun size={56} className="text-amber-500 drop-shadow-sm animate-pulse" />
                         <div className="space-y-0.5">
                           <h3 className="text-4xl font-black text-slate-800 leading-none">23°C</h3>
@@ -462,7 +462,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                   <div className="absolute top-0 inset-x-0 h-1 bg-slate-950/40 z-50">
                     <div
                       key={`${progressKey}-${activeMedia.id}`}
-                      className="h-full bg-gradient-to-r from-blue-500 to-[#0b1736] animate-shrink"
+                      className="h-full bg-gradient-to-r from-blue-500 to-[#002c5f] animate-shrink"
                       style={{ animationDuration: `${activeMedia.duration || imageDuration}s` }}
                     />
                   </div>
@@ -495,7 +495,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
                   disabled={filteredMedia.length === 0}
-                  className="p-3 rounded-xl bg-[#0b1736] hover:bg-[#162758] text-white font-semibold shadow-lg shadow-[#0b1736]/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-3 rounded-xl bg-[#002c5f] hover:bg-[#162758] text-white font-semibold shadow-lg shadow-[#002c5f]/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   title={isPlaying ? 'Pausar Transmissão' : 'Iniciar Transmissão'}
                 >
                   {isPlaying ? <Pause size={18} /> : <Play size={18} />}
@@ -518,7 +518,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                   onClick={() => setPlaylistLoop(!playlistLoop)}
                   className={`p-2 rounded-xl border flex items-center gap-1.5 text-xs font-semibold transition-all ${
                     playlistLoop
-                      ? 'bg-blue-50 border-blue-200 text-[#0b1736] shadow-sm'
+                      ? 'bg-blue-50 border-blue-200 text-[#002c5f] shadow-sm'
                       : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600 hover:text-slate-800 shadow-sm'
                   }`}
                   title="Repetição Contínua da Playlist"
@@ -540,7 +540,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                       setImageDuration(val);
                       setProgressKey(prev => prev + 1);
                     }}
-                    className="bg-white border border-slate-200 text-slate-700 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-[#0b1736] shadow-sm"
+                    className="bg-white border border-slate-200 text-slate-700 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-[#002c5f] shadow-sm"
                   >
                     <option value={3}>3s</option>
                     <option value={5}>5s</option>
@@ -588,7 +588,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                     key={media.id}
                     className={`p-2.5 rounded-xl border flex items-center justify-between gap-3 group/item transition-all duration-200 ${
                       isActive
-                        ? 'bg-blue-50 border-blue-200 text-[#0b1736] shadow-sm'
+                        ? 'bg-blue-50 border-blue-200 text-[#002c5f] shadow-sm'
                         : 'bg-white border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-600'
                     }`}
                   >
@@ -600,9 +600,9 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                       <div className="w-6 h-6 shrink-0 flex items-center justify-center rounded-lg text-[10px] font-mono font-bold bg-slate-50 border border-slate-200 text-slate-500">
                         {isActive && isPlaying ? (
                           <div className="flex items-end gap-0.5 h-2.5 w-2.5">
-                            <span className="w-0.5 bg-[#0b1736] rounded-sm animate-pulse h-full"></span>
-                            <span className="w-0.5 bg-[#0b1736] rounded-sm animate-pulse h-1/2" style={{ animationDelay: '0.15s' }}></span>
-                            <span className="w-0.5 bg-[#0b1736] rounded-sm animate-pulse h-3/4" style={{ animationDelay: '0.3s' }}></span>
+                            <span className="w-0.5 bg-[#002c5f] rounded-sm animate-pulse h-full"></span>
+                            <span className="w-0.5 bg-[#002c5f] rounded-sm animate-pulse h-1/2" style={{ animationDelay: '0.15s' }}></span>
+                            <span className="w-0.5 bg-[#002c5f] rounded-sm animate-pulse h-3/4" style={{ animationDelay: '0.3s' }}></span>
                           </div>
                         ) : (
                           <span>{idx + 1}</span>
@@ -611,7 +611,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
 
                       {/* Small Type Icon */}
                       <span className="shrink-0 text-slate-400 font-medium">
-                        {isVirtual ? <CloudSun size={12} className="text-[#0b1736]" /> : media.type === 'video' ? <Film size={12} /> : <ImageIcon size={12} />}
+                        {isVirtual ? <CloudSun size={12} className="text-[#002c5f]" /> : media.type === 'video' ? <Film size={12} /> : <ImageIcon size={12} />}
                       </span>
 
                       {/* Name / Info */}
@@ -636,7 +636,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                             className={`p-1 rounded transition-colors ${
                               idx === 0 
                                 ? 'text-slate-350 cursor-not-allowed' 
-                                : 'text-slate-500 hover:text-[#0b1736] hover:bg-blue-50/50'
+                                : 'text-slate-500 hover:text-[#002c5f] hover:bg-blue-50/50'
                             }`}
                             title="Mover para Cima"
                           >
@@ -648,7 +648,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                             className={`p-1 rounded transition-colors ${
                               idx === playlistWithWeather.length - 2 
                                 ? 'text-slate-350 cursor-not-allowed' 
-                                : 'text-slate-500 hover:text-[#0b1736] hover:bg-blue-50/50'
+                                : 'text-slate-500 hover:text-[#002c5f] hover:bg-blue-50/50'
                             }`}
                             title="Mover para Baixo"
                           >
