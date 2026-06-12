@@ -111,9 +111,11 @@ const App: React.FC = () => {
     }
   }, [currentUser]);
 
-  // Auth actions
-  const handleLogin = (email: string, password?: string): boolean => {
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+  const handleLogin = (identifier: string, password?: string): boolean => {
+    const user = users.find(u => 
+      (u.username && u.username.toLowerCase() === identifier.toLowerCase()) || 
+      u.email.toLowerCase() === identifier.toLowerCase()
+    );
     if (user && user.password === password) {
       setCurrentUser(user);
       return true;

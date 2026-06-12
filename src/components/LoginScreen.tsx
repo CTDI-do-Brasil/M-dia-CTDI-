@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, AlertCircle, Mail } from 'lucide-react';
+import { Lock, AlertCircle, User as UserIcon } from 'lucide-react';
 import { User } from '../types';
 
 interface LoginScreenProps {
@@ -8,7 +8,7 @@ interface LoginScreenProps {
 }
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -16,14 +16,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
     e.preventDefault();
     setError('');
 
-    if (!email.trim()) {
-      setError('Por favor, digite o seu e-mail.');
+    if (!usernameOrEmail.trim()) {
+      setError('Por favor, digite o seu usuário ou e-mail.');
       return;
     }
 
-    const success = onLogin(email.trim().toLowerCase(), password);
+    const success = onLogin(usernameOrEmail.trim().toLowerCase(), password);
     if (!success) {
-      setError('E-mail ou senha inválidos.');
+      setError('Usuário, e-mail ou senha inválidos.');
     }
   };
 
@@ -60,20 +60,20 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-3.5">
-            {/* Input E-mail */}
+            {/* Input Usuário ou E-mail */}
             <div className="space-y-1">
               <label className="text-[11px] font-semibold text-slate-500 block">
-                E-mail Corporativo
+                Nome de Usuário / E-mail
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-                  <Mail size={15} />
+                  <UserIcon size={15} />
                 </span>
                 <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Digite seu e-mail corporativo"
+                  type="text"
+                  value={usernameOrEmail}
+                  onChange={(e) => setUsernameOrEmail(e.target.value)}
+                  placeholder="Digite seu usuário ou e-mail"
                   className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all"
                 />
               </div>
@@ -123,7 +123,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           <div className="mt-5 pt-4 border-t border-slate-100 text-center">
             <span className="text-[9px] text-slate-400 leading-relaxed block">
               Acesso administrativo padrão:<br />
-              <strong className="text-slate-500">admin@ctdibrasil.com.br</strong> / senha: <strong className="text-slate-500">qwe!@#123</strong>
+              <strong className="text-slate-500">admin</strong> ou <strong className="text-slate-500">admin@ctdibrasil.com.br</strong><br />
+              senha: <strong className="text-slate-500">qwe!@#123</strong>
             </span>
           </div>
         </div>
