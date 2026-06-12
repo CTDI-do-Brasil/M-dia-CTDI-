@@ -33,21 +33,24 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
       <div className="w-full max-w-sm">
         {/* Card do Formulário */}
         <div className="glass border border-white/80 rounded-3xl p-7 shadow-xl relative overflow-hidden">
-          {/* Luz Decorativa */}
-          <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/3 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/3 rounded-full blur-3xl pointer-events-none"></div>
-
-          {/* Logo / Título integrado dentro do Card */}
-          <div className="flex flex-col items-center mb-5">
+          {/* Banner de cabeçalho integrado para acomodar o logo sem parecer "colado" */}
+          <div className="bg-[#0b1736] py-6 -mx-7 -mt-7 mb-6 flex flex-col items-center border-b border-[#162758]">
             <img 
               src="/ctdi-logo-50.png" 
               alt="Logo CTDI 50 Anos" 
-              className="h-20 w-auto object-contain mb-2 drop-shadow-sm opacity-90"
+              className="h-20 w-auto object-contain drop-shadow-md"
             />
-            <h1 className="text-2xl font-bold tracking-wide text-slate-800">
+            <h1 className="text-2xl font-bold tracking-wide text-white mt-2">
               Mídias
             </h1>
+            <span className="text-[9px] text-slate-400 font-semibold tracking-widest uppercase mt-0.5">
+              Portal Corporativo - CTDI
+            </span>
           </div>
+
+          {/* Luz Decorativa */}
+          <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-500/3 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/3 rounded-full blur-3xl pointer-events-none"></div>
 
           {error && (
             <div className="mb-4 p-2.5 rounded-lg bg-red-50/80 border border-red-100 text-red-600 text-xs flex items-center gap-2">
