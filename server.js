@@ -3,6 +3,7 @@ import pg from 'pg';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import os from 'os';
 
 const { Pool } = pg;
 
@@ -246,6 +247,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor backend executando na porta ${PORT}`);
+  console.log('Disponível na rede local em:');
+  console.log(`  - Local: http://localhost:${PORT}`);
+  const nets = os.networkInterfaces();
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+      if (net.family === 'IPv4' && !net.internal) {
+        console.log(`  - Rede:  http://${net.address}:${PORT}`);
+      }
+    }
+  }
 });
