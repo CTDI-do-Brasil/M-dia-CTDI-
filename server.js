@@ -24,6 +24,20 @@ app.use(express.json());
 // Servir arquivos estáticos do build do Vite (dist)
 app.use(express.static(path.join(__dirname, 'dist')));
 
+// Fallback local em memória caso o PostgreSQL não esteja rodando (para desenvolvimento local fácil)
+let useLocalFallback = false;
+let mockUsers = [
+  { id: 'user-admin', name: 'Administrador Master', email: 'admin@ctdibrasil.com.br', username: 'admin', role: 'admin', password: 'qwe!@#123', department: null },
+  { id: 'user-mkt', name: 'Depto Marketing', email: 'marketing@ctdibrasil.com.br', username: 'marketing', role: 'dept', password: '123', department: 'Marketing' },
+  { id: 'user-eng', name: 'Depto Engenharia', email: 'engenharia@ctdibrasil.com.br', username: 'engenharia', role: 'dept', password: '123', department: 'Engenharia' },
+  { id: 'user-viewer', name: 'Visualizador Geral', email: 'visualizador@ctdibrasil.com.br', username: 'visualizador', role: 'viewer', password: '123', department: null }
+];
+
+let mockMediaItems = [
+  { id: 'media-1', title: 'Métricas de Engenharia CTDI', type: 'image', url: '/slide1.png', size: '3.2 MB', department: 'Engenharia', uploaded_by: 'Depto Engenharia', uploaded_at: new Date().toISOString(), duration: null, schedule_start: null, schedule_end: null, order_index: 1 },
+  { id: 'media-2', title: 'Campanha de Marketing CTDI', type: 'image', url: '/slide2.png', size: '2.8 MB', department: 'Marketing', uploaded_by: 'Depto Marketing', uploaded_at: new Date().toISOString(), duration: null, schedule_start: null, schedule_end: null, order_index: 2 }
+];
+
 // Inicialização das tabelas a partir do schema.sql
 const initializeDatabase = async () => {
   try {
@@ -36,7 +50,8 @@ const initializeDatabase = async () => {
       console.warn('schema.sql não encontrado. Certifique-se de inicializar o banco manualmente.');
     }
   } catch (err) {
-    console.error('Erro ao inicializar o banco de dados:', err);
+    console.warn('AVISO: Não foi possível conectar ao PostgreSQL. Usando banco em memória (Fallback local) para testes.');
+    useLocalFallback = true;
   }
 };
 
@@ -49,6 +64,18 @@ app.post('/api/auth/login', async (req, res) => {
   const { identifier, password } = req.body;
   if (!identifier || !password) {
     return res.status(400).json({ error: 'Identificador e senha são obrigatórios.' });
+  }
+
+  if (useLocalFallback) {
+    const user = mockUsers.find(u => 
+      (u.username && u.username.toLowerCase() === identifier.trim().toLowerCase()) || 
+      u.email.toLowerCase() === identifier.trim().toLowerCase()
+    );
+    if (user && user.password === password) {
+      const { password, ...userWithoutPassword } = user;
+      return res.json(userWithoutPassword);
+    }
+    return res.status(401).json({ error: 'Usuário ou senha inválidos.' });
   }
 
   try {
@@ -74,6 +101,11 @@ app.post('/api/auth/login', async (req, res) => {
 
 // 2. List Users
 app.get('/api/users', async (req, res) => {
+  if (useLocalFallback) {
+    const sorted = [...mockUsers].sort((a, b) => a.name.localeCompare(b.name));
+    return res.json(sorted);
+  }
+
   try {
     const result = await pool.query('SELECT * FROM users ORDER BY name ASC');
     res.json(result.rows);
@@ -92,6 +124,18 @@ app.post('/api/users', async (req, res) => {
 
   const id = `user-${Date.now()}`;
   const username = email.split('@')[0];
+
+  if (useLocalFallback) {
+    const checkExists = mockUsers.some(u => u.email.toLowerCase() === email.toLowerCase());
+    if (checkExists) {
+      return res.status(400).json({ error: 'Este e-mail já está cadastrado.' });
+    }
+    const createdUser = {
+      id, name, email, username, role, department: department || null, password: password || null
+    };
+    mockUsers.push(createdUser);
+    return res.status(201).json(createdUser);
+  }
 
   try {
     const checkExists = await pool.query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [email]);
@@ -116,9 +160,21 @@ app.post('/api/users', async (req, res) => {
 app.put('/api/users/:id', async (req, res) => {
   const { id } = req.params;
   const { name, email, role, department, password } = req.body;
+  const username = email.split('@')[0];
+
+  if (useLocalFallback) {
+    const index = mockUsers.findIndex(u => u.id === id);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Usuário não encontrado.' });
+    }
+    mockUsers[index] = {
+      ...mockUsers[index],
+      name, email, username, role, department: department || null, password: password || null
+    };
+    return res.json(mockUsers[index]);
+  }
 
   try {
-    const username = email.split('@')[0];
     const query = `
       UPDATE users
       SET name = $1, email = $2, username = $3, role = $4, department = $5, password = $6
@@ -139,6 +195,16 @@ app.put('/api/users/:id', async (req, res) => {
 // 5. Delete User
 app.delete('/api/users/:id', async (req, res) => {
   const { id } = req.params;
+
+  if (useLocalFallback) {
+    const index = mockUsers.findIndex(u => u.id === id);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Usuário não encontrado.' });
+    }
+    mockUsers.splice(index, 1);
+    return res.json({ success: true });
+  }
+
   try {
     const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
     if (result.rows.length === 0) {
@@ -153,6 +219,24 @@ app.delete('/api/users/:id', async (req, res) => {
 
 // 6. List Media Items
 app.get('/api/media', async (req, res) => {
+  if (useLocalFallback) {
+    const mapped = mockMediaItems.map(row => ({
+      id: row.id,
+      title: row.title,
+      type: row.type,
+      url: row.url,
+      size: row.size,
+      department: row.department,
+      uploadedBy: row.uploaded_by,
+      uploadedAt: row.uploaded_at,
+      duration: row.duration,
+      scheduleStart: row.schedule_start,
+      scheduleEnd: row.schedule_end,
+      orderIndex: row.order_index
+    })).sort((a, b) => a.orderIndex - b.orderIndex);
+    return res.json(mapped);
+  }
+
   try {
     const result = await pool.query('SELECT * FROM media_items ORDER BY order_index ASC, uploaded_at DESC');
     // Mapeia nomes de colunas do banco (snake_case) para CamelCase no retorno da API
@@ -187,6 +271,30 @@ app.post('/api/media', async (req, res) => {
   const id = `media-${Date.now()}`;
   const uploadedAt = new Date().toISOString();
 
+  if (useLocalFallback) {
+    const maxIdx = mockMediaItems.reduce((max, item) => (item.order_index > max ? item.order_index : max), 0);
+    const orderIndex = maxIdx + 1;
+    const created = {
+      id, title, type, url, size, department, uploaded_by: uploadedBy || 'Sistema', uploaded_at: uploadedAt,
+      duration: duration || null, schedule_start: scheduleStart || null, schedule_end: scheduleEnd || null, order_index: orderIndex
+    };
+    mockMediaItems.push(created);
+    return res.status(201).json({
+      id: created.id,
+      title: created.title,
+      type: created.type,
+      url: created.url,
+      size: created.size,
+      department: created.department,
+      uploadedBy: created.uploaded_by,
+      uploadedAt: created.uploaded_at,
+      duration: created.duration,
+      scheduleStart: created.schedule_start,
+      scheduleEnd: created.schedule_end,
+      orderIndex: created.order_index
+    });
+  }
+
   try {
     // Obter o maior order_index para colocar no final
     const maxIdxResult = await pool.query('SELECT MAX(order_index) as max_idx FROM media_items');
@@ -211,6 +319,16 @@ app.post('/api/media', async (req, res) => {
 // 8. Delete Media Item
 app.delete('/api/media/:id', async (req, res) => {
   const { id } = req.params;
+
+  if (useLocalFallback) {
+    const index = mockMediaItems.findIndex(m => m.id === id);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Mídia não encontrada.' });
+    }
+    mockMediaItems.splice(index, 1);
+    return res.json({ success: true });
+  }
+
   try {
     const result = await pool.query('DELETE FROM media_items WHERE id = $1 RETURNING *', [id]);
     if (result.rows.length === 0) {
@@ -230,6 +348,17 @@ app.post('/api/media/reorder', async (req, res) => {
     return res.status(400).json({ error: 'Parâmetro inválido. Deve ser um array de IDs.' });
   }
 
+  if (useLocalFallback) {
+    mediaIds.forEach((id, index) => {
+      const item = mockMediaItems.find(m => m.id === id);
+      if (item) {
+        item.order_index = index;
+      }
+    });
+    mockMediaItems.sort((a, b) => a.order_index - b.order_index);
+    return res.json({ success: true });
+  }
+
   try {
     const promises = mediaIds.map((id, index) => {
       return pool.query('UPDATE media_items SET order_index = $1 WHERE id = $2', [index, id]);
@@ -243,7 +372,7 @@ app.post('/api/media/reorder', async (req, res) => {
 });
 
 // Qualquer outra requisição que não seja da API carrega a aplicação Single Page (dist/index.html)
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
