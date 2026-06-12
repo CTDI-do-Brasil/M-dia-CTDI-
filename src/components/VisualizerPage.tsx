@@ -21,9 +21,26 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
   const [imageDuration, setImageDuration] = useState<number>(30); // Default: 30 seconds
   const [playlistLoop, setPlaylistLoop] = useState<boolean>(true); // Default: Playlist loops
   
+  // Environment selection
+  const [activeEnvironment, setActiveEnvironment] = useState<string | null>(() => {
+    return localStorage.getItem('midiahub_viewer_env');
+  });
+
   // Search & Filter
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDept, setSelectedDept] = useState('Todos');
+  const [selectedDept, setSelectedDept] = useState(() => {
+    const saved = localStorage.getItem('midiahub_viewer_env');
+    return saved && saved !== 'Geral' ? saved : 'Todos';
+  });
+
+  // Persist environment selection
+  useEffect(() => {
+    if (activeEnvironment) {
+      localStorage.setItem('midiahub_viewer_env', activeEnvironment);
+    } else {
+      localStorage.removeItem('midiahub_viewer_env');
+    }
+  }, [activeEnvironment]);
 
   // Interactive modes
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
@@ -271,30 +288,90 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
     }, 50);
   };
 
+  if (!activeEnvironment) {
+    const availableEnvs = ['Geral', 'Logística', 'Produção', 'Marketing', 'Engenharia', ...Array.from(new Set(mediaItems.map(m => m.department)))].filter((value, index, self) => self.indexOf(value) === index && value !== 'Todos' && value);
+
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center p-6">
+        <div className="w-full max-w-4xl text-center space-y-8 animate-fadeIn">
+          <div className="space-y-3">
+            <h2 className="text-3xl font-extrabold tracking-tight text-[#002c5f] sm:text-4xl">
+              Selecione o Ambiente de Visualização
+            </h2>
+            <p className="max-w-2xl mx-auto text-sm text-slate-500">
+              Escolha qual ambiente/playlist esta tela deve reproduzir. A tela ficará vinculada apenas aos conteúdos do setor selecionado.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {availableEnvs.map((env) => (
+              <button
+                key={env}
+                onClick={() => {
+                  setActiveEnvironment(env);
+                  setSelectedDept(env === 'Geral' ? 'Todos' : env);
+                  setCurrentIndex(0);
+                }}
+                className="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:border-[#002c5f] hover:shadow-md transition-all text-left flex flex-col justify-between h-44 overflow-hidden focus:outline-none bento-card"
+              >
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#002c5f]/3 rounded-full blur-2xl group-hover:bg-[#002c5f]/10 transition-all"></div>
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Ambiente</span>
+                  <h3 className="text-lg font-bold text-slate-800 group-hover:text-[#002c5f] transition-all">
+                    {env}
+                  </h3>
+                </div>
+                <div className="flex justify-between items-center w-full mt-4">
+                  <span className="text-xs font-semibold text-slate-500">
+                    {env === 'Geral' ? 'Todas as mídias' : `${mediaItems.filter(m => m.department === env).length} itens`}
+                  </span>
+                  <span className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-[#002c5f] group-hover:text-white flex items-center justify-center text-[#002c5f] text-sm font-bold transition-all">
+                    →
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
       {/* Search & Filter Header */}
       <div className="glass border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <span className="text-xs font-semibold text-slate-600 uppercase shrink-0">Filtrar Playlist:</span>
-          <div className="flex gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none w-full">
-            {departments.map((dept) => (
-              <button
-                key={dept}
-                onClick={() => {
-                  setSelectedDept(dept);
-                  setCurrentIndex(0);
-                }}
-                className={`text-[10px] font-semibold px-3 py-1.5 rounded-lg border transition-all shrink-0 ${
-                  selectedDept === dept
-                    ? 'bg-[#002c5f] text-white border-[#002c5f] shadow-md shadow-[#002c5f]/10'
-                    : 'bg-white border-slate-200 text-slate-650 hover:text-[#002c5f] hover:bg-blue-50/50 hover:border-blue-200'
-                }`}
-              >
-                {dept}
-              </button>
-            ))}
-          </div>
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <span className="text-xs font-bold text-[#002c5f] uppercase tracking-widest bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-200">
+            Ambiente: {activeEnvironment}
+          </span>
+          <button
+            onClick={() => setActiveEnvironment(null)}
+            className="text-xs font-semibold text-slate-500 hover:text-red-650 bg-slate-100 hover:bg-red-50 border border-slate-200 hover:border-red-200 px-3 py-1.5 rounded-lg transition-all"
+          >
+            Trocar Ambiente
+          </button>
+          
+          {activeEnvironment === 'Geral' && (
+            <div className="flex gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none max-w-full">
+              {departments.map((dept) => (
+                <button
+                  key={dept}
+                  onClick={() => {
+                    setSelectedDept(dept);
+                    setCurrentIndex(0);
+                  }}
+                  className={`text-[10px] font-semibold px-3 py-1.5 rounded-lg border transition-all shrink-0 ${
+                    selectedDept === dept
+                      ? 'bg-[#002c5f] text-white border-[#002c5f] shadow-md shadow-[#002c5f]/10'
+                      : 'bg-white border-slate-200 text-slate-650 hover:text-[#002c5f] hover:bg-blue-50/50 hover:border-blue-200'
+                  }`}
+                >
+                  {dept}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="relative w-full md:w-64">
