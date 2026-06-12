@@ -6,103 +6,34 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { DepartmentDashboard } from './components/DepartmentDashboard';
 import { VisualizerPage } from './components/VisualizerPage';
 
-// Default mock users
-const DEFAULT_USERS: User[] = [
-  {
-    id: 'user-admin',
-    email: 'admin@ctdibrasil.com.br',
-    username: 'admin',
-    name: 'Administrador Master',
-    role: 'admin',
-    password: 'qwe!@#123'
-  },
-  {
-    id: 'user-mkt',
-    email: 'marketing@ctdibrasil.com.br',
-    username: 'marketing',
-    name: 'Depto Marketing',
-    role: 'dept',
-    department: 'Marketing',
-    password: '123'
-  },
-  {
-    id: 'user-eng',
-    email: 'engenharia@ctdibrasil.com.br',
-    username: 'engenharia',
-    name: 'Depto Engenharia',
-    role: 'dept',
-    department: 'Engenharia',
-    password: '123'
-  },
-  {
-    id: 'user-viewer',
-    email: 'visualizador@ctdibrasil.com.br',
-    username: 'visualizador',
-    name: 'Visualizador Geral',
-    role: 'viewer',
-    password: '123'
-  }
-];
-
-// Default mock media items
-const DEFAULT_MEDIA: MediaItem[] = [
-  {
-    id: 'media-1',
-    title: 'Métricas de Engenharia CTDI',
-    type: 'image',
-    url: '/slide1.png',
-    size: '3.2 MB',
-    department: 'Engenharia',
-    uploadedBy: 'Depto Engenharia',
-    uploadedAt: new Date(Date.now() - 3600000 * 3).toISOString() // 3 hours ago
-  },
-  {
-    id: 'media-2',
-    title: 'Campanha de Marketing CTDI',
-    type: 'image',
-    url: '/slide2.png',
-    size: '2.8 MB',
-    department: 'Marketing',
-    uploadedBy: 'Depto Marketing',
-    uploadedAt: new Date(Date.now() - 3600000 * 2).toISOString() // 2 hours ago
-  },
-  {
-    id: 'media-3',
-    title: 'Vídeo Institucional CTDI',
-    type: 'video',
-    url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    size: '15.4 MB',
-    department: 'Marketing',
-    uploadedBy: 'Depto Marketing',
-    uploadedAt: new Date(Date.now() - 3600000).toISOString() // 1 hour ago
-  }
-];
-
 const App: React.FC = () => {
-  const [users, setUsers] = useState<User[]>(() => {
-    const saved = localStorage.getItem('midiahub_users');
-    return saved ? JSON.parse(saved) : DEFAULT_USERS;
-  });
-
-  const [mediaItems, setMediaItems] = useState<MediaItem[]>(() => {
-    const saved = localStorage.getItem('midiahub_media');
-    return saved ? JSON.parse(saved) : DEFAULT_MEDIA;
-  });
-
+  const [users, setUsers] = useState<User[]>([]);
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(() => {
     const saved = sessionStorage.getItem('midiahub_session');
     return saved ? JSON.parse(saved) : null;
   });
 
-  // Sync to localStorage/sessionStorage
+  // Fetch initial data on mount/auth state changes
   useEffect(() => {
-    localStorage.setItem('midiahub_users', JSON.stringify(users));
-  }, [users]);
+    if (currentUser) {
+      // Fetch media list
+      fetch('/api/media')
+        .then(res => res.json())
+        .then(data => setMediaItems(data))
+        .catch(err => console.error('Erro ao buscar mídias:', err));
 
-  useEffect(() => {
-    localStorage.setItem('midiahub_media', JSON.stringify(mediaItems));
-  }, [mediaItems]);
+      // Fetch users list only for admin dashboard
+      if (currentUser.role === 'admin') {
+        fetch('/api/users')
+          .then(res => res.json())
+          .then(data => setUsers(data))
+          .catch(err => console.error('Erro ao buscar usuários:', err));
+      }
+    }
+  }, [currentUser]);
 
+  // Keep session storage synced
   useEffect(() => {
     if (currentUser) {
       sessionStorage.setItem('midiahub_session', JSON.stringify(currentUser));
@@ -111,90 +42,163 @@ const App: React.FC = () => {
     }
   }, [currentUser]);
 
-  const handleLogin = (identifier: string, password?: string): boolean => {
-    const user = users.find(u => 
-      (u.username && u.username.toLowerCase() === identifier.toLowerCase()) || 
-      u.email.toLowerCase() === identifier.toLowerCase()
-    );
-    if (user && user.password === password) {
+  const handleLogin = async (identifier: string, password?: string): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier, password })
+      });
+      if (!res.ok) return false;
+      const user = await res.json();
       setCurrentUser(user);
       return true;
+    } catch (err) {
+      console.error('Erro na autenticação:', err);
+      return false;
     }
-    return false;
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
   };
 
-  const handleSwitchUser = (identifier: string) => {
+  const handleSwitchUser = async (identifier: string) => {
     const user = users.find(u => u.username === identifier || u.email === identifier);
     if (user) {
       setCurrentUser(user);
+    } else {
+      try {
+        const res = await fetch('/api/users');
+        if (res.ok) {
+          const allUsers: User[] = await res.json();
+          setUsers(allUsers);
+          const found = allUsers.find(u => u.username === identifier || u.email === identifier);
+          if (found) {
+            setCurrentUser(found);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
   // Admin actions
-  const handleAddUser = (newUserPayload: Omit<User, 'id'>): boolean => {
-    const exists = users.some(u => u.email.toLowerCase() === newUserPayload.email.toLowerCase());
-    if (exists) return false;
-
-    // Derive username from email prefix for display compatibility
-    const username = newUserPayload.email.split('@')[0];
-
-    const newUser: User = {
-      ...newUserPayload,
-      username,
-      id: `user-${Date.now()}`
-    };
-
-    setUsers(prev => [...prev, newUser]);
-    return true;
-  };
-
-  const handleDeleteUser = (id: string) => {
-    setUsers(prev => prev.filter(u => u.id !== id));
-  };
-
-  const handleUpdateUser = (updatedUser: User) => {
-    setUsers(prev => prev.map(u => u.id === updatedUser.id ? updatedUser : u));
-    // If the edited user is the current user, update session state
-    if (currentUser && currentUser.id === updatedUser.id) {
-      setCurrentUser(updatedUser);
+  const handleAddUser = async (newUserPayload: Omit<User, 'id'>): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newUserPayload)
+      });
+      if (!res.ok) return false;
+      const createdUser = await res.json();
+      setUsers(prev => [...prev, createdUser]);
+      return true;
+    } catch (err) {
+      console.error('Erro ao cadastrar usuário:', err);
+      return false;
     }
   };
 
-  const handleReorderMedia = (currentIndex: number, direction: 'up' | 'down') => {
+  const handleDeleteUser = async (id: string) => {
+    try {
+      const res = await fetch(`/api/users/${id}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        setUsers(prev => prev.filter(u => u.id !== id));
+      }
+    } catch (err) {
+      console.error('Erro ao deletar usuário:', err);
+    }
+  };
+
+  const handleUpdateUser = async (updatedUser: User) => {
+    try {
+      const res = await fetch(`/api/users/${updatedUser.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedUser)
+      });
+      if (res.ok) {
+        const savedUser = await res.json();
+        setUsers(prev => prev.map(u => u.id === savedUser.id ? savedUser : u));
+        if (currentUser && currentUser.id === savedUser.id) {
+          setCurrentUser(savedUser);
+        }
+      }
+    } catch (err) {
+      console.error('Erro ao atualizar usuário:', err);
+    }
+  };
+
+  const handleReorderMedia = async (currentIndex: number, direction: 'up' | 'down') => {
     if (currentIndex < 0 || currentIndex >= mediaItems.length) return;
     
     const newMedia = [...mediaItems];
+    let targetIndex = currentIndex;
     if (direction === 'up' && currentIndex > 0) {
-      // Swap with item above
-      const temp = newMedia[currentIndex];
-      newMedia[currentIndex] = newMedia[currentIndex - 1];
-      newMedia[currentIndex - 1] = temp;
+      targetIndex = currentIndex - 1;
     } else if (direction === 'down' && currentIndex < mediaItems.length - 1) {
-      // Swap with item below
-      const temp = newMedia[currentIndex];
-      newMedia[currentIndex] = newMedia[currentIndex + 1];
-      newMedia[currentIndex + 1] = temp;
+      targetIndex = currentIndex + 1;
     }
-    setMediaItems(newMedia);
+    
+    if (targetIndex !== currentIndex) {
+      const temp = newMedia[currentIndex];
+      newMedia[currentIndex] = newMedia[targetIndex];
+      newMedia[targetIndex] = temp;
+      
+      // Update local state immediately for visual responsiveness
+      setMediaItems(newMedia);
+      
+      try {
+        const mediaIds = newMedia.map(m => m.id);
+        await fetch('/api/media/reorder', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mediaIds })
+        });
+      } catch (err) {
+        console.error('Erro ao salvar reordenação:', err);
+      }
+    }
   };
 
   // Media actions
-  const handleUploadMedia = (media: Omit<MediaItem, 'id' | 'uploadedBy' | 'uploadedAt'>) => {
-    const newMedia: MediaItem = {
-      ...media,
-      id: `media-${Date.now()}`,
-      uploadedBy: currentUser ? currentUser.name : 'Desconhecido',
-      uploadedAt: new Date().toISOString()
-    };
-    setMediaItems(prev => [...prev, newMedia]);
+  const handleUploadMedia = async (media: Omit<MediaItem, 'id' | 'uploadedBy' | 'uploadedAt'>) => {
+    try {
+      const payload = {
+        ...media,
+        uploadedBy: currentUser ? currentUser.name : 'Desconhecido'
+      };
+      const res = await fetch('/api/media', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        const mediaRes = await fetch('/api/media');
+        const mediaData = await mediaRes.json();
+        setMediaItems(mediaData);
+      }
+    } catch (err) {
+      console.error('Erro ao cadastrar mídia:', err);
+    }
   };
 
-  const handleDeleteMedia = (id: string) => {
-    setMediaItems(prev => prev.filter(m => m.id !== id));
+  const handleDeleteMedia = async (id: string) => {
+    try {
+      const res = await fetch(`/api/media/${id}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        setMediaItems(prev => prev.filter(m => m.id !== id));
+      }
+    } catch (err) {
+      console.error('Erro ao deletar mídia:', err);
+    }
   };
 
   // Screen routing

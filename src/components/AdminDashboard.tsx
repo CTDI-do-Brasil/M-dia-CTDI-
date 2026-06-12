@@ -7,7 +7,7 @@ import { User, MediaItem } from '../types';
 interface AdminDashboardProps {
   users: User[];
   mediaItems: MediaItem[];
-  onAddUser: (user: Omit<User, 'id'>) => boolean;
+  onAddUser: (user: Omit<User, 'id'>) => Promise<boolean>;
   onDeleteUser: (id: string) => void;
   onUpdateUser: (user: User) => void;
   onDeleteMedia: (id: string) => void;
@@ -56,7 +56,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     )
   ).filter(Boolean);
 
-  const handleSubmitUser = (e: React.FormEvent) => {
+  const handleSubmitUser = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
     setFormSuccess('');
@@ -79,7 +79,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       department: role === 'dept' ? department.trim() : undefined
     };
 
-    const success = onAddUser(newUserPayload);
+    const success = await onAddUser(newUserPayload);
     if (success) {
       setFormSuccess('Usuário cadastrado com sucesso!');
       setName('');

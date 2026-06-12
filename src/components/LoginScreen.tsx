@@ -3,7 +3,7 @@ import { Lock, AlertCircle, User as UserIcon } from 'lucide-react';
 import { User } from '../types';
 
 interface LoginScreenProps {
-  onLogin: (username: string, password?: string) => boolean;
+  onLogin: (username: string, password?: string) => Promise<boolean>;
   users: User[];
 }
 
@@ -11,8 +11,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -21,9 +22,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
       return;
     }
 
-    const success = onLogin(usernameOrEmail.trim().toLowerCase(), password);
-    if (!success) {
-      setError('Usuário, e-mail ou senha inválidos.');
+    try {
+      setIsLoading(true);
+      const success = await onLogin(usernameOrEmail.trim().toLowerCase(), password);
+      if (!success) {
+        setError('Usuário, e-mail ou senha inválidos.');
+      }
+    } catch (err) {
+      setError('Erro de conexão com o servidor.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,8 +81,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   type="text"
                   value={usernameOrEmail}
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
+                  disabled={isLoading}
                   placeholder="Digite seu usuário ou e-mail"
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all disabled:opacity-50"
                 />
               </div>
             </div>
@@ -92,12 +101,13 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
                   placeholder="Digite sua senha"
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all disabled:opacity-50"
                 />
               </div>
               <div className="flex justify-end pt-0.5">
-                <button type="button" className="text-[10px] text-slate-400 hover:text-[#0b1736] transition-colors font-medium">
+                <button type="button" disabled={isLoading} className="text-[10px] text-slate-400 hover:text-[#0b1736] transition-colors font-medium disabled:opacity-50">
                   Esqueceu a senha?
                 </button>
               </div>
@@ -106,9 +116,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             {/* Botão Acessar */}
             <button
               type="submit"
-              className="w-full py-2.5 px-4 mt-5 rounded-xl bg-[#0b1736] hover:bg-[#162758] text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-[#0b1736]/10 focus:outline-none"
+              disabled={isLoading}
+              className="w-full py-2.5 px-4 mt-5 rounded-xl bg-[#0b1736] hover:bg-[#162758] text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-[#0b1736]/10 focus:outline-none disabled:opacity-50"
             >
-              Entrar no Sistema
+              {isLoading ? 'Acessando...' : 'Entrar no Sistema'}
             </button>
           </form>
 
