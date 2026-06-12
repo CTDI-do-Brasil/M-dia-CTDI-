@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Users, Video, Image as ImageIcon, Plus, Trash2, Edit2, Check, X, ArrowUp, ArrowDown, Key, Layers, Film
+  Users, Video, Image as ImageIcon, Plus, Trash2, Edit2, Check, X, ArrowUp, ArrowDown, Layers, Film
 } from 'lucide-react';
 import { User, MediaItem } from '../types';
 
@@ -139,14 +139,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         {/* Total Mídias */}
         <div className="glass border border-slate-800/80 rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden bento-card">
-          <div className="p-3 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
+          <div className="p-3 bg-[#0b1736]/10 text-[#0b1736] rounded-xl border border-[#0b1736]/20">
             <Film size={22} />
           </div>
           <div>
             <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Total de Mídias</span>
             <h4 className="text-2xl font-bold text-slate-100">{totalMedia}</h4>
           </div>
-          <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[#0b1736]/5 rounded-full blur-2xl pointer-events-none"></div>
         </div>
 
         {/* Total Vídeos */}
@@ -178,7 +178,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* 2. Formulário Cadastrar Usuário */}
         <div className="glass border border-slate-800/80 rounded-2xl p-6 h-fit space-y-5 bento-card">
           <h3 className="text-lg font-bold text-slate-200 flex items-center gap-2">
-            <Plus size={18} className="text-indigo-400" />
+            <Plus size={18} className="text-[#0b1736]" />
             Cadastrar Novo Usuário
           </h3>
 
@@ -203,7 +203,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Ex: Carlos Silva"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 text-xs"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs"
               />
             </div>
 
@@ -215,7 +215,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Ex: carlos@ctdibrasil.com.br"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 text-xs"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs"
               />
             </div>
 
@@ -225,7 +225,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value as any)}
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 text-xs"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs"
               >
                 <option value="dept">Usuário por Departamento</option>
                 <option value="viewer">Somente Visualização (Playlist)</option>
@@ -242,7 +242,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
                   placeholder="Selecione ou digite um novo departamento"
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 text-xs"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs"
                 />
                 <datalist id="departments">
                   {existingDepartments.map((dept) => (
@@ -260,13 +260,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Defina uma senha"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 text-xs"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md shadow-indigo-600/10 transition-colors"
+              className="w-full py-2.5 rounded-xl bg-[#0b1736] hover:bg-[#162758] text-white font-semibold text-xs shadow-md shadow-[#0b1736]/10 transition-colors"
             >
               Criar Conta
             </button>
@@ -303,7 +303,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             type="text"
                             value={editName}
                             onChange={(e) => setEditName(e.target.value)}
-                            className="w-full px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-indigo-500"
+                            className="w-full px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-[#0b1736]"
                           />
                         ) : (
                           user.name
@@ -311,13 +311,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       </td>
 
                       {/* E-mail */}
-                      <td className="py-3 px-3 text-indigo-600 font-mono">
+                      <td className="py-3 px-3 text-[#0b1736] font-mono">
                         {isEditing ? (
                           <input
                             type="email"
                             value={editEmail}
                             onChange={(e) => setEditEmail(e.target.value)}
-                            className="w-full px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-indigo-500"
+                            className="w-full px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-[#0b1736]"
                           />
                         ) : (
                           user.email
@@ -331,7 +331,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             <select
                               value={editRole}
                               onChange={(e) => setEditRole(e.target.value as any)}
-                              className="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-850 focus:outline-none focus:border-indigo-500"
+                              className="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-850 focus:outline-none focus:border-[#0b1736]"
                             >
                               <option value="admin">Admin Master</option>
                               <option value="dept">Depto</option>
@@ -344,24 +344,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                                 value={editDepartment}
                                 onChange={(e) => setEditDepartment(e.target.value)}
                                 placeholder="Setor"
-                                className="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-indigo-500"
+                                className="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-[#0b1736]"
                               />
                             )}
                           </div>
                         ) : (
                           <>
                             {user.role === 'admin' && (
-                              <span className="px-2 py-0.5 rounded-full bg-red-50 text-red-650 border border-red-200 text-[10px] font-semibold">
+                              <span className="px-2 py-0.5 rounded-full bg-red-50 text-red-655 border border-red-205 text-[10px] font-semibold">
                                 Admin Master
                               </span>
                             )}
                             {user.role === 'viewer' && (
-                              <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-650 border border-emerald-200 text-[10px] font-semibold">
+                              <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-655 border border-emerald-205 text-[10px] font-semibold">
                                 Visualização
                               </span>
                             )}
                             {user.role === 'dept' && (
-                              <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-650 border border-indigo-200 text-[10px] font-semibold">
+                              <span className="px-2 py-0.5 rounded-full bg-blue-50 text-[#0b1736] border border-[#0b1736]/20 text-[10px] font-semibold">
                                 Depto: {user.department}
                               </span>
                             )}
@@ -376,7 +376,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             type="text"
                             value={editPassword}
                             onChange={(e) => setEditPassword(e.target.value)}
-                            className="w-24 px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-indigo-500"
+                            className="w-24 px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-800 focus:outline-none focus:border-[#0b1736]"
                           />
                         ) : (
                           <span className="font-mono text-slate-550">
@@ -410,7 +410,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               <>
                                 <button
                                   onClick={() => startEditUser(user)}
-                                  className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 border border-transparent hover:border-indigo-200 rounded-lg transition-all"
+                                  className="p-1.5 text-slate-500 hover:text-[#0b1736] hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all"
                                   title="Editar Usuário / Resetar Senha"
                                 >
                                   <Edit2 size={13} />
@@ -442,7 +442,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="glass border border-slate-800/80 rounded-2xl p-6 space-y-5">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-slate-200 flex items-center gap-2">
-            <Layers size={18} className="text-indigo-400" />
+            <Layers size={18} className="text-[#0b1736]" />
             Controle Geral de Arquivos & Ordem de Playlist
           </h3>
           <span className="text-xs text-slate-400">
@@ -480,8 +480,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           onClick={() => onReorderMedia(idx, 'up')}
                           className={`p-1 rounded transition-colors ${
                             idx === 0 
-                              ? 'text-slate-700 cursor-not-allowed' 
-                              : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800'
+                              ? 'text-slate-750 cursor-not-allowed' 
+                              : 'text-slate-400 hover:text-[#0b1736] hover:bg-blue-50/50'
                           }`}
                           title="Mover para Cima"
                         >
@@ -492,8 +492,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           onClick={() => onReorderMedia(idx, 'down')}
                           className={`p-1 rounded transition-colors ${
                             idx === mediaItems.length - 1 
-                              ? 'text-slate-700 cursor-not-allowed' 
-                              : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800'
+                              ? 'text-slate-750 cursor-not-allowed' 
+                              : 'text-slate-400 hover:text-[#0b1736] hover:bg-blue-50/50'
                           }`}
                           title="Mover para Baixo"
                         >

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MonitorPlay, LogOut, User as UserIcon, RefreshCw } from 'lucide-react';
+import { LogOut, User as UserIcon, RefreshCw } from 'lucide-react';
 import { User } from '../types';
 
 interface NavbarProps {
@@ -15,11 +15,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, users, on
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
-        return 'bg-red-50 text-red-600 border border-red-200';
+        return 'bg-red-50 text-red-650 border border-red-200';
       case 'dept':
-        return 'bg-indigo-55/10 bg-indigo-50 text-indigo-600 border border-indigo-200';
+        return 'bg-blue-50 text-[#0b1736] border border-blue-200';
       case 'viewer':
-        return 'bg-emerald-50 text-emerald-600 border border-emerald-200';
+        return 'bg-emerald-50 text-emerald-650 border border-emerald-200';
       default:
         return 'bg-slate-50 text-slate-600 border border-slate-200';
     }
@@ -40,7 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, users, on
           alt="Logo CTDI" 
           className="h-8 w-auto object-contain mr-1 drop-shadow-sm" 
         />
-        <h2 className="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-800 to-slate-900 bg-clip-text text-transparent font-medium">
+        <h2 className="text-xl font-bold tracking-tight text-[#0b1736] font-medium">
           Mídias
         </h2>
       </div>
@@ -51,10 +51,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, users, on
         <div className="relative">
           <button
             onClick={() => setShowSimulateMenu(!showSimulateMenu)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 hover:text-slate-800 shadow-sm transition-all"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 hover:text-[#0b1736] shadow-sm transition-all"
             title="Simular outro acesso rapidamente"
           >
-            <RefreshCw size={13} className="text-slate-500" />
+            <RefreshCw size={13} className="text-slate-505" />
             <span>Trocar Acesso</span>
           </button>
 
@@ -68,11 +68,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser, onLogout, users, on
                   <button
                     key={user.id}
                     onClick={() => {
-                      onSwitchUser(user.username);
+                      onSwitchUser(user.username || user.email.split('@')[0]);
                       setShowSimulateMenu(false);
                     }}
                     className={`w-full text-left px-2.5 py-2 rounded-lg text-xs flex flex-col gap-0.5 hover:bg-slate-50 transition-colors ${
-                      currentUser.username === user.username ? 'bg-indigo-50 border border-indigo-200 text-indigo-700' : ''
+                      currentUser.username === user.username ? 'bg-blue-50 border border-blue-200 text-[#0b1736]' : ''
                     }`}
                   >
                     <span className="font-semibold text-slate-700">{user.name}</span>

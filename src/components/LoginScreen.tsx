@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, User as UserIcon, AlertCircle, Mail } from 'lucide-react';
+import { Lock, AlertCircle, Mail } from 'lucide-react';
 import { User } from '../types';
 
 interface LoginScreenProps {
@@ -28,7 +28,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-indigo-50/40 via-slate-50/50 to-blue-50/40">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-50/40 via-slate-50/50 to-slate-100/40">
       {/* Container Principal */}
       <div className="w-full max-w-sm">
         {/* Card do Formulário */}
@@ -49,7 +49,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           </div>
 
           {/* Luz Decorativa */}
-          <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-500/3 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 left-0 w-48 h-48 bg-[#0b1736]/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/3 rounded-full blur-3xl pointer-events-none"></div>
 
           {error && (
@@ -74,7 +74,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Digite seu e-mail corporativo"
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400/20 text-xs transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all"
                 />
               </div>
             </div>
@@ -93,11 +93,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Digite sua senha"
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400/20 text-xs transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all"
                 />
               </div>
               <div className="flex justify-end pt-0.5">
-                <button type="button" className="text-[10px] text-slate-400 hover:text-indigo-650 transition-colors font-medium">
+                <button type="button" className="text-[10px] text-slate-400 hover:text-[#0b1736] transition-colors font-medium">
                   Esqueceu a senha?
                 </button>
               </div>
@@ -106,7 +106,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             {/* Botão Acessar */}
             <button
               type="submit"
-              className="w-full py-2.5 px-4 mt-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-indigo-600/10 focus:outline-none"
+              className="w-full py-2.5 px-4 mt-5 rounded-xl bg-[#0b1736] hover:bg-[#162758] text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-[#0b1736]/10 focus:outline-none"
             >
               Entrar no Sistema
             </button>
@@ -115,7 +115,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           {/* Rodapé Interno do Card */}
           <div className="mt-4 text-center">
             <span className="text-[10px] text-slate-400">
-              Não tem uma conta? <button type="button" className="underline text-slate-500 hover:text-indigo-650 transition-all font-medium">Solicite acesso</button>
+              Não tem uma conta? <button type="button" className="underline text-slate-500 hover:text-[#0b1736] transition-all font-medium">Solicite acesso</button>
             </span>
           </div>
 

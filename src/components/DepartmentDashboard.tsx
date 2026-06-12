@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { UploadCloud, Video, Image as ImageIcon, Trash2, Info, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { UploadCloud, Video, Trash2, Info, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { User, MediaItem } from '../types';
 import { uploadFileToMinIO } from '../minioService';
 
@@ -156,10 +156,10 @@ export const DepartmentDashboard: React.FC<DepartmentDashboardProps> = ({
             Painel do Departamento
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Espaço reservado para envio e gestão de mídias do setor: <strong className="text-indigo-400">{currentUser.department}</strong>
+            Espaço reservado para envio e gestão de mídias do setor: <strong className="text-[#0b1736] font-bold">{currentUser.department}</strong>
           </p>
         </div>
-        <div className="flex items-center gap-2.5 bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-xl text-xs text-indigo-300 w-fit">
+        <div className="flex items-center gap-2.5 bg-blue-50 border border-blue-200 px-4 py-2 rounded-xl text-xs text-[#0b1736] w-fit font-medium">
           <Info size={16} className="shrink-0" />
           <span>Mídias enviadas aqui aparecem em tempo real na playlist geral.</span>
         </div>
@@ -188,7 +188,7 @@ export const DepartmentDashboard: React.FC<DepartmentDashboardProps> = ({
                   value={customDuration}
                   onChange={(e) => setCustomDuration(e.target.value)}
                   placeholder="Ex: 10 (Padrão: global)"
-                  className="w-full px-3 py-1.5 rounded-lg bg-slate-950/60 border border-slate-800 text-slate-200 focus:outline-none focus:border-indigo-500 transition-all text-xs"
+                  className="w-full px-3 py-1.5 rounded-lg bg-slate-950/60 border border-slate-800 text-slate-200 focus:outline-none focus:border-[#0b1736] transition-all text-xs"
                 />
               </div>
 
@@ -199,7 +199,7 @@ export const DepartmentDashboard: React.FC<DepartmentDashboardProps> = ({
                   id="enableSchedule"
                   checked={enableSchedule}
                   onChange={(e) => setEnableSchedule(e.target.checked)}
-                  className="rounded border-slate-800 bg-slate-950/60 text-indigo-600 focus:ring-indigo-500/30"
+                  className="rounded border-slate-800 bg-slate-950/60 text-[#0b1736] focus:ring-[#0b1736]/20"
                 />
                 <label htmlFor="enableSchedule" className="text-[11px] text-slate-300 cursor-pointer select-none">
                   Agendar período de exibição
@@ -240,9 +240,9 @@ export const DepartmentDashboard: React.FC<DepartmentDashboardProps> = ({
               onClick={() => !isUploading && fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all duration-200 ${
                 isUploading 
-                  ? 'border-indigo-500/30 bg-indigo-500/5 cursor-wait opacity-60' 
+                  ? 'border-[#0b1736]/30 bg-[#0b1736]/5 cursor-wait opacity-60' 
                   : isDragActive
-                  ? 'border-indigo-500 bg-indigo-500/5 cursor-pointer'
+                  ? 'border-[#0b1736] bg-[#0b1736]/5 cursor-pointer'
                   : 'border-slate-800 bg-slate-950/40 hover:bg-slate-950/80 hover:border-slate-700 cursor-pointer'
               }`}
             >
@@ -256,18 +256,18 @@ export const DepartmentDashboard: React.FC<DepartmentDashboardProps> = ({
               />
               {isUploading ? (
                 <div className="w-full px-4 py-2 flex flex-col items-center">
-                  <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                  <span className="text-sm font-mono font-bold text-indigo-400 mb-2">{uploadProgress}%</span>
+                  <div className="w-10 h-10 border-4 border-[#0b1736] border-t-transparent rounded-full animate-spin mb-4"></div>
+                  <span className="text-sm font-mono font-bold text-[#0b1736] mb-2">{uploadProgress}%</span>
                   <div className="w-full bg-slate-900 border border-slate-800 rounded-full h-2.5 overflow-hidden">
                     <div 
-                      className="bg-indigo-500 h-full rounded-full transition-all duration-300 ease-out"
+                      className="bg-[#0b1736] h-full rounded-full transition-all duration-300 ease-out"
                       style={{ width: `${uploadProgress}%` }}
                     ></div>
                   </div>
                 </div>
               ) : (
                 <>
-                  <UploadCloud size={40} className={`mb-3 ${isDragActive ? 'text-indigo-400' : 'text-slate-500'}`} />
+                  <UploadCloud size={40} className={`mb-3 ${isDragActive ? 'text-[#0b1736]' : 'text-slate-500'}`} />
                   <span className="text-xs font-semibold text-slate-300 block mb-1">
                     Arraste e solte o arquivo aqui
                   </span>

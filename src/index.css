@@ -9,9 +9,9 @@
     font-family: 'Outfit', sans-serif;
     background-color: #f8fafc !important;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.05) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.03) 0px, transparent 50%) !important;
+      radial-gradient(at 0% 0%, rgba(11, 23, 54, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.03) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(11, 23, 54, 0.03) 0px, transparent 50%) !important;
     background-attachment: fixed;
     color: #0f172a !important;
   }
@@ -40,9 +40,9 @@ input, select, textarea {
 }
 
 input:focus, select:focus {
-  border-color: #6366f1 !important;
+  border-color: #0b1736 !important;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15) !important;
+  box-shadow: 0 0 0 2px rgba(11, 23, 54, 0.15) !important;
 }
 
 input::placeholder {
@@ -81,19 +81,19 @@ input::placeholder {
 }
 
 .text-indigo-400 {
-  color: #4f46e5 !important;
+  color: #0b1736 !important;
 }
 
 .bg-indigo-600\/10 {
-  background-color: rgba(99, 102, 241, 0.08) !important;
+  background-color: rgba(11, 23, 54, 0.08) !important;
 }
 
 .border-indigo-500\/40 {
-  border-color: rgba(99, 102, 241, 0.25) !important;
+  border-color: rgba(11, 23, 54, 0.25) !important;
 }
 
 .text-indigo-300 {
-  color: #4f46e5 !important;
+  color: #0b1736 !important;
 }
 
 /* Dropzone borders and hover states */
@@ -103,15 +103,15 @@ input::placeholder {
 }
 
 .border-dashed:hover {
-  border-color: #6366f1 !important;
-  background-color: rgba(99, 102, 241, 0.02) !important;
+  border-color: #0b1736 !important;
+  background-color: rgba(11, 23, 54, 0.02) !important;
 }
 
 /* Login screen gradient */
 .bg-gradient-to-br {
   background-image: 
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.06) 0px, transparent 50%) !important;
+    radial-gradient(at 0% 0%, rgba(11, 23, 54, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.04) 0px, transparent 50%) !important;
   background-color: #f8fafc !important;
 }
 
@@ -159,13 +159,13 @@ input::placeholder {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.2);
+  background: rgba(11, 23, 54, 0.2);
   border-radius: 9999px;
   transition: all 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.4);
+  background: rgba(11, 23, 54, 0.4);
 }
 
 /* Animations */
@@ -198,6 +198,6 @@ input::placeholder {
 
 .bento-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(99, 102, 241, 0.25) !important;
-  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.08) !important;
+  border-color: rgba(11, 23, 54, 0.25) !important;
+  box-shadow: 0 12px 30px -10px rgba(11, 23, 54, 0.08) !important;
 }
