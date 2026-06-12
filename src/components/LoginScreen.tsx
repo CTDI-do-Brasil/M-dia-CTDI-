@@ -42,22 +42,22 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         {/* Card do Formulário */}
         <div className="glass border border-white/80 rounded-3xl p-7 shadow-xl relative overflow-hidden">
           {/* Banner de cabeçalho integrado para acomodar o logo sem parecer "colado" */}
-          <div className="bg-[#0b1736] py-6 -mx-7 -mt-7 mb-6 flex flex-col items-center border-b border-[#162758]">
+          <div className="bg-[#002c5f] py-6 -mx-7 -mt-7 mb-6 flex flex-col items-center border-b border-[#003d82]">
             <img 
-              src="/ctdi-logo-50.png" 
-              alt="Logo CTDI 50 Anos" 
-              className="h-20 w-auto object-contain drop-shadow-md"
+              src="/ctdi-logo-horizontal.png" 
+              alt="Logo CTDI" 
+              className="h-14 w-auto object-contain drop-shadow-md"
             />
             <h1 className="text-2xl font-bold tracking-wide text-white mt-2">
               Mídias
             </h1>
-            <span className="text-[9px] text-slate-400 font-semibold tracking-widest uppercase mt-0.5">
+            <span className="text-[9px] text-slate-300 font-semibold tracking-widest uppercase mt-0.5">
               Portal Corporativo - CTDI
             </span>
           </div>
 
           {/* Luz Decorativa */}
-          <div className="absolute top-0 left-0 w-48 h-48 bg-[#0b1736]/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 left-0 w-48 h-48 bg-[#002c5f]/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/3 rounded-full blur-3xl pointer-events-none"></div>
 
           {error && (
@@ -83,7 +83,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
                   disabled={isLoading}
                   placeholder="Digite seu usuário ou e-mail"
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#002c5f] focus:ring-1 focus:ring-[#002c5f]/20 text-xs transition-all disabled:opacity-50"
                 />
               </div>
             </div>
@@ -103,11 +103,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
                   placeholder="Digite sua senha"
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0b1736] focus:ring-1 focus:ring-[#0b1736]/20 text-xs transition-all disabled:opacity-50"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50/50 border border-slate-200/80 text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#002c5f] focus:ring-1 focus:ring-[#002c5f]/20 text-xs transition-all disabled:opacity-50"
                 />
               </div>
               <div className="flex justify-end pt-0.5">
-                <button type="button" disabled={isLoading} className="text-[10px] text-slate-400 hover:text-[#0b1736] transition-colors font-medium disabled:opacity-50">
+                <button type="button" disabled={isLoading} className="text-[10px] text-slate-400 hover:text-[#002c5f] transition-colors font-medium disabled:opacity-50">
                   Esqueceu a senha?
                 </button>
               </div>
@@ -117,7 +117,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2.5 px-4 mt-5 rounded-xl bg-[#0b1736] hover:bg-[#162758] text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-[#0b1736]/10 focus:outline-none disabled:opacity-50"
+              className="w-full py-2.5 px-4 mt-5 rounded-xl bg-[#002c5f] hover:bg-[#003d82] text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-[#002c5f]/10 focus:outline-none disabled:opacity-50"
             >
               {isLoading ? 'Acessando...' : 'Entrar no Sistema'}
             </button>
@@ -126,7 +126,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           {/* Rodapé Interno do Card */}
           <div className="mt-4 text-center">
             <span className="text-[10px] text-slate-400">
-              Não tem uma conta? <button type="button" className="underline text-slate-500 hover:text-[#0b1736] transition-all font-medium">Solicite acesso</button>
+              Não tem uma conta? <button type="button" className="underline text-slate-500 hover:text-[#002c5f] transition-all font-medium">Solicite acesso</button>
             </span>
           </div>
 
