@@ -180,24 +180,40 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
     }
   };
 
-  // Autoplay handler
+  // Load video when media changes
   useEffect(() => {
-    // Clear any active timers
-    if (timerRef.current) clearTimeout(timerRef.current);
-
-    if (!activeMedia || !isPlaying) return;
-
-    if (activeMedia.type === 'video') {
-      // For videos, autoplay is handled by the video element events
+    if (activeMedia && activeMedia.type === 'video') {
       const videoEl = videoRef.current;
       if (videoEl) {
         videoEl.load();
-        videoEl.play().catch(err => {
-          console.warn("Autoplay was blocked or interrupted:", err);
-        });
+        if (isPlaying && videoEl.paused) {
+          videoEl.play().catch(err => console.warn("Play block:", err));
+        }
+      }
+    }
+  }, [activeMedia]);
+
+  // Sync play/pause state for videos and handle image slideshow timers
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+
+    if (!activeMedia) return;
+
+    if (activeMedia.type === 'video') {
+      const videoEl = videoRef.current;
+      if (videoEl) {
+        if (isPlaying) {
+          if (videoEl.paused) {
+            videoEl.play().catch(err => console.warn("Play block:", err));
+          }
+        } else {
+          if (!videoEl.paused) {
+            videoEl.pause();
+          }
+        }
       }
     } else if (activeMedia.type === 'image') {
-      // For images, switch after the configured duration (individual or global)
+      if (!isPlaying) return;
       const duration = activeMedia.duration || imageDuration;
       timerRef.current = setTimeout(() => {
         handleNext();
@@ -421,6 +437,8 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                     src={activeMedia.url}
                     controls={!isFullscreen || showControls}
                     autoPlay={isPlaying}
+                    muted
+                    playsInline
                     onEnded={handleVideoEnded}
                     className="w-full h-full object-contain"
                   />
