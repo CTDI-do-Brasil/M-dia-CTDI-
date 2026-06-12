@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Play, Pause, SkipForward, SkipBack, ExternalLink, Repeat, Clock, Search, ArrowUp, ArrowDown, Film, Image as ImageIcon,
-  Tv, CloudSun, Maximize2, Minimize2, Sun, Cloud, CloudRain, Wind, Droplets
+  CloudSun, Maximize2, Minimize2, Sun, Cloud, CloudRain, Wind, Droplets
 } from 'lucide-react';
 import { MediaItem, User } from '../types';
 
@@ -28,7 +28,6 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
   // Interactive modes
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [showControls, setShowControls] = useState<boolean>(true);
-  const [showWidgets, setShowWidgets] = useState<boolean>(true);
   const [fadeState, setFadeState] = useState<boolean>(true); // For slide transitions
 
   // Geração dinâmica da previsão de 7 dias para Campinas
@@ -435,19 +434,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                   </div>
                 )}
 
-                {/* News Ticker Widget */}
-                {showWidgets && (
-                  <div className="absolute bottom-16 inset-x-0 bg-white/95 border-y border-slate-200 py-1.5 z-40 overflow-hidden flex items-center select-none pointer-events-none shadow-sm">
-                    <div className="shrink-0 bg-[#0b1736] text-[8px] font-bold text-white px-2 py-0.5 rounded ml-4 uppercase tracking-wider">
-                      Avisos CTDI
-                    </div>
-                    <div className="flex-1 w-full overflow-hidden relative">
-                      <div className="whitespace-nowrap inline-block animate-marquee text-[10px] font-medium text-slate-700">
-                        ⚠️ Atenção: O uso de EPI é obrigatório em todas as áreas operacionais. • 🚀 CTDI do Brasil comemora recorde histórico de entregas este mês! • 🔧 Manutenção programada nos servidores da engenharia no domingo às 22h. • 💡 Dica de Economia: Desligue os monitores ao final do seu expediente.
-                      </div>
-                    </div>
-                  </div>
-                )}
+
 
                 {/* Info Overlay at the bottom (hidden in fullscreen if controls are hidden) */}
                 {(!isFullscreen || showControls) && (
@@ -579,19 +566,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
                   </select>
                 </div>
 
-                {/* Toggle Widgets */}
-                <button
-                  onClick={() => setShowWidgets(!showWidgets)}
-                  className={`p-2 rounded-xl border flex items-center gap-1.5 text-xs font-semibold transition-all ${
-                    showWidgets
-                      ? 'bg-emerald-50 border-emerald-250/70 text-emerald-650 shadow-sm'
-                      : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600 hover:text-slate-800 shadow-sm'
-                  }`}
-                  title="Mostrar ou ocultar Relógio/Tempo/Notícias"
-                >
-                  <Tv size={14} />
-                  <span>Widgets</span>
-                </button>
+
 
                 {/* Fullscreen Button */}
                 <button
