@@ -437,41 +437,7 @@ export const VisualizerPage: React.FC<VisualizerPageProps> = ({
 
 
                 {/* Info Overlay at the bottom (hidden in fullscreen if controls are hidden) */}
-                {(!isFullscreen || showControls) && (
-                  <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/95 via-black/60 to-transparent text-left flex items-end justify-between gap-4 z-40">
-                    <div className="space-y-1">
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#0b1736] text-white uppercase tracking-wider">
-                        {activeMedia.department}
-                      </span>
-                      <h3 className="text-sm font-semibold text-slate-100 truncate max-w-sm">
-                        {activeMedia.title}
-                      </h3>
-                      <div className="flex gap-2 text-[10px] text-slate-400">
-                        <span>Autor: {activeMedia.uploadedBy}</span>
-                        <span>•</span>
-                        <span>Tamanho: {activeMedia.size}</span>
-                        {activeMedia.duration && (
-                          <>
-                            <span>•</span>
-                            <span className="text-blue-400">Duração: {activeMedia.duration}s</span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    
-                    {/* Open in New Tab Button */}
-                    <a
-                      href={activeMedia.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 text-[10px] font-semibold tracking-wide shadow-lg"
-                      title="Visualizar em tamanho máximo numa aba separada"
-                    >
-                      <ExternalLink size={12} />
-                      <span>Nova Aba</span>
-                    </a>
-                  </div>
-                )}
+
 
                 {/* Progress Bar (Only for images) */}
                 {activeMedia.type === 'image' && isPlaying && (
