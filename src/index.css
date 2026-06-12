@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;850;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Outfit', sans-serif;
+    background-color: #f8fafc !important;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.03) 0px, transparent 50%) !important;
+    background-attachment: fixed;
+    color: #0f172a !important;
+  }
+}
+
+/* Global Light Mode Overrides */
+.min-h-screen {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Glassmorphism in Light Mode (Clean Frost) */
+.glass {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Input elements styling */
+input, select, textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+input:focus, select:focus {
+  border-color: #6366f1 !important;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15) !important;
+}
+
+input::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Text color overrides to match Light Mode */
+.text-slate-100 { color: #0f172a !important; }
+.text-slate-200 { color: #1e293b !important; }
+.text-slate-300 { color: #334155 !important; }
+.text-slate-400 { color: #475569 !important; }
+.text-slate-500 { color: #64748b !important; }
+.text-slate-600 { color: #94a3b8 !important; }
+
+/* Dashboard and sidebar cards */
+.bg-slate-950\/40, 
+.bg-slate-950\/60, 
+.bg-slate-950\/20, 
+.bg-slate-900, 
+.bg-slate-900\/90, 
+.bg-slate-900\/40,
+.bg-slate-900\/20,
+.bg-slate-900\/10,
+.bg-slate-900\/15 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+.border-slate-800, 
+.border-slate-850, 
+.border-slate-700, 
+.border-slate-900,
+.border-slate-900\/60,
+.border-slate-800\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+.text-indigo-400 {
+  color: #4f46e5 !important;
+}
+
+.bg-indigo-600\/10 {
+  background-color: rgba(99, 102, 241, 0.08) !important;
+}
+
+.border-indigo-500\/40 {
+  border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+.text-indigo-300 {
+  color: #4f46e5 !important;
+}
+
+/* Dropzone borders and hover states */
+.border-dashed {
+  border-color: #cbd5e1 !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.border-dashed:hover {
+  border-color: #6366f1 !important;
+  background-color: rgba(99, 102, 241, 0.02) !important;
+}
+
+/* Login screen gradient */
+.bg-gradient-to-br {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.06) 0px, transparent 50%) !important;
+  background-color: #f8fafc !important;
+}
+
+/* Switch User Buttons */
+.bg-slate-800\/60, .bg-slate-800\/80 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+.bg-slate-800\/60:hover, .bg-slate-800\/80:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Weather slider specific dark background overrides */
+.bg-\[\#030611\] {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Scrolling ticker colors */
+.bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: #e2e8f0 !important;
+}
+
+.animate-marquee {
+  color: #334155 !important;
+}
+
+/* Footer bottom bar */
+.border-slate-900 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 9999px;
+  transition: all 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.4);
+}
+
+/* Animations */
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.animate-shrink {
+  animation: shrink linear forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Bento card effects */
+.bento-card {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99, 102, 241, 0.25) !important;
+  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.08) !important;
+}
